@@ -9,16 +9,33 @@
 <ul>
     {% for comment in comments %}
         <li>{{ comment.author.username }}: {{ comment.content }}</li>
+    {% empty %}
+        <li>Нет комментариев. Будьте первым!</li>
     {% endfor %}
 </ul>
 
-<h3>Добавить комментарий</h3>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Отправить</button>
-</form>
+<button id="show-comment-form">Добавить комментарий</button>
+
+<div id="comment-form" style="display: none;">
+    <form method="post" action="{% url 'add_comment' post.pk %}">
+        {% csrf_token %}
+        {{ form.as_p }}  
+        <button type="submit">Отправить</button>
+    </form>
+</div>
 
 <a href="{% url 'post_edit' post.pk %}">Редактировать</a>
 <a href="{% url 'post_delete' post.pk %}">Удалить</a>
+
+<script>
+    document.getElementById('show-comment-form').addEventListener('click', function() {
+        var commentForm = document.getElementById('comment-form');
+        if (commentForm.style.display === 'none') {
+            commentForm.style.display = 'block'; 
+        } else {
+            commentForm.style.display = 'none';  
+        }
+    });
+</script>
+
 {% endblock %}
