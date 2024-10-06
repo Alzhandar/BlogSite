@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Профиль {{ user.username }}</h1>
+<p>Биография: {{ user.profile.bio }}</p>
+
+{% if user.profile.profile_picture %}
+    <img src="{{ user.profile.profile_picture.url }}" alt="Profile Picture" width="150">
+{% else %}
+    <p>Изображение профиля не загружено.</p>
+{% endif %}
+
+<a href="{% url 'edit_profile' %}">Редактировать профиль</a>
+{% endblock %}

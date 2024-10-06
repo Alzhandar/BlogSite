@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ post.title }}</h1>
+<p>{{ post.content }}</p>
+<p>Автор: {{ post.author.username }} | Дата: {{ post.created_at }}</p>
+
+<h2>Комментарии</h2>
+<ul>
+    {% for comment in comments %}
+        <li>{{ comment.author.username }}: {{ comment.content }}</li>
+    {% endfor %}
+</ul>
+
+<h3>Добавить комментарий</h3>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Отправить</button>
+</form>
+
+<a href="{% url 'post_edit' post.pk %}">Редактировать</a>
+<a href="{% url 'post_delete' post.pk %}">Удалить</a>
+{% endblock %}
