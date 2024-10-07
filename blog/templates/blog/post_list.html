@@ -3,11 +3,13 @@
 {% block content %}
 <h1>Все посты</h1>
 
+<!-- Форма поиска -->
 <form method="get">
     <input type="text" name="q" placeholder="Поиск..." value="{{ query }}" class="search-box">
     <button type="submit">Искать</button>
 </form>
 
+<!-- Список постов -->
 <ul>
     {% for post in page_obj %}
         <li class="post">
@@ -15,14 +17,17 @@
             <p>{{ post.content|truncatewords:20 }}</p>
             <p><small>Автор: {{ post.author.username }} | Дата: {{ post.created_at }}</small></p>
         </li>
+    {% empty %}
+        <li>Посты не найдены.</li>
     {% endfor %}
 </ul>
 
+<!-- Пагинация -->
 <div class="pagination">
     <span class="step-links">
         {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; Первая</a>
-            <a href="?page={{ page_obj.previous_page_number }}">Предыдущая</a>
+            <a href="?q={{ query }}&page=1">&laquo; Первая</a>
+            <a href="?q={{ query }}&page={{ page_obj.previous_page_number }}">Предыдущая</a>
         {% endif %}
 
         <span class="current">
@@ -30,8 +35,8 @@
         </span>
 
         {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">Следующая</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">Последняя &raquo;</a>
+            <a href="?q={{ query }}&page={{ page_obj.next_page_number }}">Следующая</a>
+            <a href="?q={{ query }}&page={{ page_obj.paginator.num_pages }}">Последняя &raquo;</a>
         {% endif %}
     </span>
 </div>
