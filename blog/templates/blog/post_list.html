@@ -3,13 +3,11 @@
 {% block content %}
 <h1>Все посты</h1>
 
-<!-- Форма поиска -->
 <form method="get">
     <input type="text" name="q" placeholder="Поиск..." value="{{ query }}" class="search-box">
     <button type="submit">Искать</button>
 </form>
 
-<!-- Список постов -->
 <ul>
     {% for post in page_obj %}
         <li class="post">
@@ -22,7 +20,6 @@
     {% endfor %}
 </ul>
 
-<!-- Пагинация -->
 <div class="pagination">
     <span class="step-links">
         {% if page_obj.has_previous %}
